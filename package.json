@@ -1,20 +1,63 @@
 {
-  "name": "electron-webpack-quick-start",
-  "version": "0.0.0",
-  "license": "MIT",
-  "scripts": {
-    "dev": "electron-webpack dev",
-    "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder",
-    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
-  },
-  "dependencies": {
-    "source-map-support": "^0.5.12"
-  },
-  "devDependencies": {
-    "electron": "5.0.4",
-    "electron-builder": "^20.44.4",
-    "electron-webpack": "^2.7.1",
-    "webpack": "~4.35.0"
-  }
+	"name": "electron-webpack-quick-start",
+	"description": "Electron Webpack Quick Start",
+	"version": "0.0.0",
+	"license": "MIT",
+	"author": "Electron",
+	"scripts": {
+		"dev": "electron-webpack dev",
+		"compile": "electron-webpack",
+		"dist": "yarn compile && electron-builder",
+		"dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+		"postinstall": "electron-builder install-app-deps"
+	},
+	"dependencies": {
+		"source-map-support": "^0.5.12"
+	},
+	"devDependencies": {
+		"electron": "5.0.4",
+		"electron-builder": "^20.44.4",
+		"electron-notarize": "^0.1.1",
+		"electron-webpack": "^2.7.1",
+		"webpack": "~4.35.0"
+	},
+	"build": {
+		"appId": "build.electron.webpack-quick-start",
+		"publish": null,
+		"afterSign": "build/notarize.js",
+		"win": {
+			"target": [
+				{
+					"target": "nsis",
+					"arch": [
+						"ia32"
+					]
+				}
+			]
+		},
+		"nsis": {
+			"oneClick": false,
+			"allowToChangeInstallationDirectory": true,
+			"perMachine": true
+		},
+		"mac": {
+			"category": "public.app-category.utilities",
+			"target": [
+				{
+					"target": "dmg",
+					"arch": [
+						"x64"
+					]
+				}
+			],
+			"minimumSystemVersion": "10.9.0",
+			"hardenedRuntime": true,
+			"gatekeeperAssess": false,
+			"entitlements": "build/entitlements.mac.plist",
+			"entitlementsInherit": "build/entitlements.inherit.mac.plist"
+		},
+		"dmg": {
+			"sign": false
+		}
+	}
 }
