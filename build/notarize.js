@@ -13,7 +13,7 @@ exports.default = async function notarizing(params) {
     throw new Error(`Cannot find application at: ${appPath}`)
   }
 
-  console.log(`  • Notarizing ${appBundleId} found at ${appPath}`)
+  console.log(`  • Notarizing ${appPath}`)
   try {
     return await notarize({
       appBundleId: process.env.APP_BUNDLE_ID,
